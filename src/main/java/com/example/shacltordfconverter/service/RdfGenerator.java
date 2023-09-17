@@ -22,9 +22,11 @@ public class RdfGenerator {
         prefixMap.put("http://www.w3.org/2001/XMLSchema", "xsd");
     }
 
-    public Model createMockRdf(ShaclShape shaclShape) {
+    public Model createMockRdf(ShaclShape shaclShape, Integer prefixFlag) {
         Model model = ModelFactory.createDefaultModel();
-        prefixMap.forEach((key, value) -> model.setNsPrefix(value, key));
+        if (prefixFlag == 0) {
+            prefixMap.forEach((key, value) -> model.setNsPrefix(value, key));
+        }
         String target = shaclShape.getTargetClass();
         String[] splitTarget = target.split("#");
         Resource targetClass = model.createResource(prefixMap.get(splitTarget[0]) + ":" + DistinguishRestrictions.generateRandomString(0, 10));

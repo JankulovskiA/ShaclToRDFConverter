@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.ModelMap;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,10 +29,11 @@ public class Controller {
 
     @PostMapping("/getShacl")
     public String createRDF(@RequestParam("shaclFile") MultipartFile shaclFile,
-                            @RequestParam("rdfInstances") Integer rdfInstances) throws IOException {
-        Model model = ModelFactory.createDefaultModel();
-        flowHandler.convertData(model.read(shaclFile.getInputStream(), null, "TTL"));
-
-        return "";
+                            @RequestParam("rdfInstances") Integer rdfInstances,
+                            ModelMap model) throws IOException {
+        Model factoryModel = ModelFactory.createDefaultModel();
+        String rdf = flowHandler.convertData(factoryModel.read(shaclFile.getInputStream(), null, "TTL"), rdfInstances);
+        model.addAttribute("rdf", rdf);
+        return "RDFdisplay";
     }
 }
