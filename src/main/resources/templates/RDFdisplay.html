@@ -13,7 +13,7 @@
         <label for="rdf" style="display: flex; justify-content: center">Generated rdf's</label>
         <textarea disabled th:text="${rdf}" id="rdf" style="height: 100vh; width: 100%;"></textarea>
         <div class="row mb-3 mt-2" style="display: flex; justify-content: end;">
-            <button type="button" th:action="@{/controller/inputForm}" class="btn btn-danger col-1">Back</button>
+            <a type="button" class="btn btn-danger col-1" th:href="@{/controller/inputForm}">Back</a>
         </div>
     </div>
 </div>
